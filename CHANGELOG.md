@@ -1,6 +1,9 @@
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### ♻️ Chores
+- update readme
+
 
 <a name="v1.0.0"></a>
 ## v1.0.0 - 2020-09-13
