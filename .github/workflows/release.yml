@@ -1,0 +1,35 @@
+on:
+  workflow_dispatch
+
+name: Release
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.14'
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release --branches master
+      - name: Generate changelog
+        run: |
+          go get -u github.com/git-chglog/git-chglog/cmd/git-chglog
+          git-chglog -o CHANGELOG.md
+      - name: Commit release change log
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add CHANGELOG.md
+          git commit CHANGELOG.md -m 'ci(release): update changelog'
+          git push -u origin master

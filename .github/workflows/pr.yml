@@ -1,0 +1,63 @@
+name: Pull Request
+on: [pull_request]
+
+jobs:
+  pre-commit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.14'
+      - name: Install Go deps
+        run: |
+          go get -u golang.org/x/lint/golint
+      - name: Install pre-commit
+        run: |
+          pip install pre-commit
+          curl -L "$(curl -s https://api.github.com/repos/terraform-linters/tflint/releases/latest | grep -o -E "https://.+?_linux_amd64.zip")" > tflint.zip && unzip tflint.zip && rm tflint.zip && sudo mv tflint /usr/bin/
+          env GO111MODULE=on go get -u github.com/liamg/tfsec/cmd/tfsec && go get github.com/segmentio/terraform-docs@v0.9.1
+          pre-commit install
+          pre-commit install-hooks
+      - name: Run pre-commit tests
+        run: pre-commit run --all-files
+
+  fmt:
+    name: Code Format
+    runs-on: ubuntu-latest
+    container:
+      image: hashicorp/terraform:latest
+    steps:
+      - uses: actions/checkout@master
+      - run: terraform fmt --recursive -check=true
+
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    container:
+      image: hashicorp/terraform:0.12.29
+    steps:
+      - uses: actions/checkout@master
+      - name: Validate Code
+        env:
+          AWS_REGION: 'us-east-1'
+          TF_WARN_OUTPUT_ERRORS: 1
+          TF_VAR_vpc_id: 'vpc-123456'
+          TF_VAR_subnets: '["subnet-12345a"]'
+        run: |
+          terraform init
+          terraform validate
+      - name: Validate Examples
+        run: |
+          for example in $(find examples -maxdepth 1 -mindepth 1 -type d); do
+            cd $example
+            terraform init
+            terraform validate
+            cd -
+          done
+

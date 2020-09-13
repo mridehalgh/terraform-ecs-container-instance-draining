@@ -1,0 +1,41 @@
+style: github
+template: CHANGELOG.tpl.md
+info:
+  title: CHANGELOG
+  repository_url: https://github.com/edispark/terraform-ecs-container-instance-draining
+options:
+  allow_uncategorized: false
+  commits:
+    filters:
+      Type:
+        - fix
+        - feat
+        - build
+        - chore
+        - ci
+        - docs
+        - style
+        - refactor
+        - perf
+        - test
+        - revert
+  commit_groups:
+    # Taken From: https://github.com/pvdlg/conventional-changelog-metahub
+    title_maps:
+      fix: 🐛 Bug Fixes
+      feat: ✨ Features
+      build: 🛠 Builds
+      chore: ♻️ Chores
+      ci: ⚙️ Continuous Integrations
+      docs: 📚 Documentation
+      style: 💎 Styles
+      refactor: 📦 Code Refactoring
+      perf: 🚀 Performance Improvements
+      test: 🚨 Tests
+      revert: 🗑 Reverts
+  header:
+    pattern: '^(\w*)(?:\(([\w\$\.\-\*\s]*)\))?\:\s(.*)$'
+    pattern_maps:
+      - Type
+      - Scope
+      - Subject

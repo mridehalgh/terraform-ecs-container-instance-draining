@@ -1,0 +1,15 @@
+formatter: markdown table
+sections:
+  show-all: true
+  show:
+    - header
+    - inputs
+    - outputs
+    - providers
+    - requirements
+settings:
+  indent: 2
+  color: true
+  escape: true
+  required: true
+  sensitive: true

@@ -1,0 +1,11 @@
+branches:
+  - "master"
+ci: true
+verifyConditions: false
+prepare: false
+success: false
+npmPublish: false
+plugins:
+  - '@semantic-release/commit-analyzer'
+  - '@semantic-release/release-notes-generator'
+  - '@semantic-release/github'
