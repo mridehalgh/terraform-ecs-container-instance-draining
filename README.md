@@ -21,7 +21,7 @@ It works by consuming lifecyle events from an autoscaling group. When an `autosc
 data "aws_region" "current" {}
 
 module "example_module_test" {
-  source = "git::https://github.com/edispark/terraform-ecs-container-instance-draining?ref=master"
+  source = "git::https://github.com/edispark/terraform-ecs-container-instance-draining"
 
   autoscaling_group_name = "arn:partition:service:region:account-id:autoScalingGroupName/XXX"
   autoscaling_group_arn = "my-asg-name"
