@@ -2,7 +2,7 @@
 ## [Unreleased]
 
 ### ♻️ Chores
-- update readme
+- **deps:** bump github.com/gruntwork-io/terratest from 0.29.0 to 0.30.0 ([#1](https://github.com/edispark/terraform-ecs-container-instance-draining/issues/1))
 
 
 <a name="v1.0.0"></a>
