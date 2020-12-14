@@ -37,7 +37,7 @@ data "aws_iam_policy_document" "lambda" {
     ]
 
     resources = [
-      aws_cloudwatch_log_group.lambda_log_group.arn
+      format("%s:*", aws_cloudwatch_log_group.lambda_log_group.arn)
     ]
   }
 

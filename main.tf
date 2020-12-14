@@ -28,7 +28,7 @@ resource "aws_lambda_function" "draining_lambda" {
   }
 
   filename         = data.local_file.lambda_zip.filename
-  source_code_hash = data.local_file.lambda_zip.content_base64
+  source_code_hash = filebase64sha256(data.local_file.lambda_zip.filename)
 
   tags = var.tags
 }
