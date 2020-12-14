@@ -1,6 +1,6 @@
 repos:
   - repo: git://github.com/pre-commit/pre-commit-hooks
-    rev: v2.1.0
+    rev: v3.3.0
     hooks:
       - id: check-merge-conflict
       - id: check-json
@@ -13,7 +13,7 @@ repos:
         args:
           - --allow-missing-credentials
   - repo: git://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.31.0
+    rev: v1.45.0
     hooks:
       - id: terraform_fmt
       - id: terraform_docs
