@@ -23,8 +23,8 @@ data "aws_region" "current" {}
 module "example_module_test" {
   source = "git::https://github.com/edispark/terraform-ecs-container-instance-draining"
 
-  autoscaling_group_name = "arn:partition:service:region:account-id:autoScalingGroupName/XXX"
-  autoscaling_group_arn = "my-asg-name"
+  autoscaling_group_arn = "arn:partition:service:region:account-id:autoScalingGroupName/XXX"
+  autoscaling_group_name = "my-asg-name"
   ecs_cluster_arn = "arn:partition:service:region:account-id:cluster/XXX"
   ecs_cluster_name = "my-ecs-cluster-name"
 
