@@ -1,5 +1,3 @@
-<img src="https://edispark.com/assets/img/logo_dark.png" width="300">
-
 # ECS container instance draining on lifecycle events
 
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
