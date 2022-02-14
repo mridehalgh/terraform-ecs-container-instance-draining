@@ -69,14 +69,14 @@ data "aws_iam_policy_document" "lambda" {
 }
 
 resource "aws_iam_role" "lambda" {
-  name               = format("%.41s-draining-function-role", var.autoscaling_group_name)
+  name               = regex("[[:alnum:]]", format("%.41s-draining-function-role", var.autoscaling_group_name))
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
 
   tags = var.tags
 }
 
 resource "aws_iam_role_policy" "lambda_execution_policy" {
-  name = format("%.39s-draining-function-policy", var.autoscaling_group_name)
+  name = regex("[[:alnum:]]", format("%.39s-draining-function-policy", var.autoscaling_group_name))
   role = aws_iam_role.lambda.id
 
   policy = data.aws_iam_policy_document.lambda.json
@@ -100,7 +100,7 @@ data "aws_iam_policy_document" "lifecycle_assume_role" {
 }
 
 resource "aws_iam_role" "lifecycle" {
-  name               = format("%.49s-lifecycle-role", var.autoscaling_group_name)
+  name               = regex("[[:alnum:]]", format("%.49s-lifecycle-role", var.autoscaling_group_name))
   assume_role_policy = data.aws_iam_policy_document.lifecycle_assume_role.json
 
   tags = var.tags
@@ -120,9 +120,10 @@ data "aws_iam_policy_document" "lifecycle_policy" {
 }
 
 resource "aws_iam_role_policy" "lifecycle_execution_policy" {
-  name = format("%.47s-lifecycle-policy", var.autoscaling_group_name)
+  name = regex("[[:alnum:]]", format("%.47s-lifecycle-policy", var.autoscaling_group_name))
   role = aws_iam_role.lifecycle.id
 
   policy = data.aws_iam_policy_document.lifecycle_policy.json
 }
+
 

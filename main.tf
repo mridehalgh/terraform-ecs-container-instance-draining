@@ -13,7 +13,7 @@ resource "aws_lambda_permission" "with_sns" {
 }
 
 resource "aws_lambda_function" "draining_lambda" {
-  function_name = format("%.46s-draining-function", var.autoscaling_group_name)
+  function_name = regex("[[:alnum:]]", format("%.46s-draining-function", var.autoscaling_group_name))
   role          = aws_iam_role.lambda.arn
   handler       = "index.lambda_handler"
   runtime       = "python3.7"
@@ -49,3 +49,4 @@ resource "aws_autoscaling_lifecycle_hook" "asg_terminate_hook" {
   notification_target_arn = aws_sns_topic.topic.arn
   role_arn                = aws_iam_role.lifecycle.arn
 }
+
