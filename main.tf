@@ -13,7 +13,7 @@ resource "aws_lambda_permission" "with_sns" {
 }
 
 resource "aws_lambda_function" "draining_lambda" {
-  function_name = format("%s-draining-function", var.autoscaling_group_name)
+  function_name = "${var.ecs_cluster_name}-ecs-drain"
   role          = aws_iam_role.lambda.arn
   handler       = "index.lambda_handler"
   runtime       = "python3.7"

@@ -75,6 +75,20 @@ resource "aws_iam_role" "lambda" {
   tags = var.tags
 }
 
+
+resource "aws_iam_policy" "lambda" {
+
+  name        = "${var.ecs_cluster_name}-ecs-draining"
+  description = "IAM policy ecs/cloudwatch/sns to lambda for ecs cluster draining"
+  policy      = data.aws_iam_policy_document.lambda_assume_role.json
+}
+
+resource "aws_iam_role_policy_attachment" "lambda" {
+  policy_arn = aws_iam_policy.lambda.arn
+  role       = aws_iam_role.lambda.name
+}
+
+
 resource "aws_iam_role_policy" "lambda_execution_policy" {
   name = format("%s-draining-function-policy", var.autoscaling_group_name)
   role = aws_iam_role.lambda.id
