@@ -44,7 +44,7 @@ resource "aws_autoscaling_lifecycle_hook" "asg_terminate_hook" {
   name                    = format("%s-terminating-hook", var.autoscaling_group_name)
   autoscaling_group_name  = var.autoscaling_group_name
   default_result          = "ABANDON"
-  heartbeat_timeout       = 900
+  heartbeat_timeout       = var.heartbeat_timeout 
   lifecycle_transition    = "autoscaling:EC2_INSTANCE_TERMINATING"
   notification_target_arn = aws_sns_topic.topic.arn
   role_arn                = aws_iam_role.lifecycle.arn

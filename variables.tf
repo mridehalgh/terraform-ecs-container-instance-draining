@@ -13,6 +13,12 @@ variable "region" {
   description = "AWS Region for ECS cluster"
 }
 
+variable "heartbeat_timeout" {
+  type        = number
+  description = "timeout for ecs instance to complete draining"
+  default = 7200
+}
+
 variable "autoscaling_group_arn" {
   type        = string
   description = "The name of the Auto Scaling group to which you want to assign the lifecycle hook to"
