@@ -76,17 +76,17 @@ resource "aws_iam_role" "lambda" {
 }
 
 
-resource "aws_iam_policy" "lambda" {
+# resource "aws_iam_policy" "lambda" {
 
-  name        = "${var.ecs_cluster_name}-ecs-draining"
-  description = "IAM policy ecs/cloudwatch/sns to lambda for ecs cluster draining"
-  policy      = data.aws_iam_policy_document.lambda_assume_role.json
-}
+#   name        = "${var.ecs_cluster_name}-ecs-draining"
+#   description = "IAM policy ecs/cloudwatch/sns to lambda for ecs cluster draining"
+#   policy      = data.aws_iam_policy_document.lambda_assume_role.json
+# }
 
-resource "aws_iam_role_policy_attachment" "lambda" {
-  policy_arn = aws_iam_policy.lambda.arn
-  role       = aws_iam_role.lambda.name
-}
+# resource "aws_iam_role_policy_attachment" "lambda" {
+#   policy_arn = aws_iam_policy.lambda.arn
+#   role       = aws_iam_role.lambda.name
+# }
 
 
 resource "aws_iam_role_policy" "lambda_execution_policy" {
