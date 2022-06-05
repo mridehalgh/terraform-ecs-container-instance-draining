@@ -1,3 +1,10 @@
+
+locals {
+
+  region = var.append_region ? var.region : ""
+
+}
+
 data "aws_caller_identity" "current" {}
 /*
 * Lambda IAM
@@ -52,7 +59,7 @@ data "aws_iam_policy_document" "lambda" {
     resources = [
       var.ecs_cluster_arn,
       format("%s/*", var.ecs_cluster_arn),
-      format("arn:aws:ecs:%s:%s:container-instance/%s/*", var.region, data.aws_caller_identity.current.account_id, var.ecs_cluster_name)
+      format("arn:aws:ecs:%s:%s:container-instance/%s/*", local.region, data.aws_caller_identity.current.account_id, var.ecs_cluster_name)
     ]
   }
 
@@ -69,7 +76,7 @@ data "aws_iam_policy_document" "lambda" {
 }
 
 resource "aws_iam_role" "lambda" {
-  name               = format("%s-draining-function-role-%s", var.autoscaling_group_name, var.region)
+  name               = format("%s-draining-function-role-%s", var.autoscaling_group_name, local.region)
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
 
   tags = var.tags
@@ -91,7 +98,7 @@ resource "aws_iam_role_policy_attachment" "lambda" {
 
 
 resource "aws_iam_role_policy" "lambda_execution_policy" {
-  name = format("%s-draining-function-policy-%s", var.autoscaling_group_name, var.region)
+  name = format("%s-draining-function-policy-%s", var.autoscaling_group_name, local.region)
   role = aws_iam_role.lambda.id
 
   policy = data.aws_iam_policy_document.lambda.json
@@ -115,7 +122,7 @@ data "aws_iam_policy_document" "lifecycle_assume_role" {
 }
 
 resource "aws_iam_role" "lifecycle" {
-  name               = format("%s-lifecycle-role-%s", var.autoscaling_group_name, var.region)
+  name               = format("%s-lifecycle-role-%s", var.autoscaling_group_name, local.region)
   assume_role_policy = data.aws_iam_policy_document.lifecycle_assume_role.json
 
   tags = var.tags
@@ -135,7 +142,7 @@ data "aws_iam_policy_document" "lifecycle_policy" {
 }
 
 resource "aws_iam_role_policy" "lifecycle_execution_policy" {
-  name = format("%s-lifecycle-policy-%s", var.autoscaling_group_name, var.region)
+  name = format("%s-lifecycle-policy-%s", var.autoscaling_group_name, local.region)
   role = aws_iam_role.lifecycle.id
 
   policy = data.aws_iam_policy_document.lifecycle_policy.json

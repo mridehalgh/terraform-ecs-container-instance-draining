@@ -1,3 +1,8 @@
+locals {
+
+  function_name = var.append_region ? "${var.ecs_cluster_name}-ecs-drain-${var.region}" : "${var.ecs_cluster_name}-ecs-drain"
+}
+
 resource "aws_sns_topic_subscription" "topic_lambda" {
   topic_arn = aws_sns_topic.topic.arn
   protocol  = "lambda"
@@ -13,7 +18,7 @@ resource "aws_lambda_permission" "with_sns" {
 }
 
 resource "aws_lambda_function" "draining_lambda" {
-  function_name = "${var.ecs_cluster_name}-ecs-drain-${var.region}"
+  function_name = local.function_name
   role          = aws_iam_role.lambda.arn
   handler       = "index.lambda_handler"
   runtime       = "python3.7"

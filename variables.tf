@@ -13,6 +13,12 @@ variable "region" {
   description = "AWS Region for ECS cluster"
 }
 
+variable "append_region" {
+  type        = bool
+  description = "should var.region be appended to role arn"
+  default = true
+}
+
 variable "heartbeat_timeout" {
   type        = number
   description = "timeout for ecs instance to complete draining"
