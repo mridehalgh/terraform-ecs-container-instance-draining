@@ -1,7 +1,7 @@
 
 locals {
 
-  region = var.append_region ? "-${var.region}" : null
+  region = var.append_region ? "-${var.region}" : ""
 
 }
 
