@@ -16,7 +16,7 @@ resource "aws_lambda_function" "draining_lambda" {
   function_name = format("%.46s-draining-function", regex("[[:alnum:]]+", var.autoscaling_group_name))
   role          = aws_iam_role.lambda.arn
   handler       = "index.lambda_handler"
-  runtime       = "3.11"
+  runtime       = "python3.11"
   memory_size   = 128
   timeout       = 60
 
